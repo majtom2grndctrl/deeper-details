@@ -1,9 +1,9 @@
 # Deeper Details
-`deeper-details` is a web component built using the Lit library. It provides an expandable/collapsible section of content, allowing users to toggle visibility with custom buttons. This component is designed to be easily integrated into any web project.
+`deeper-details` is a web component built using the Lit library. It provides an expandable/collapsible section of content, allowing users to toggle visibility with custom buttons. Unlike other progressive disclosure components, this is designed for long-form content—like UX Portfolio case studies, where some readers can only skim content, and other readers want to see deeper details.
 
 ## Features
 * Expand and collapse content with a toggle button.
-* Customizable button labels and styles.
+* Customizable button labels and styles, using CSS Custom Properies.
 * Smooth transition animations.
 * Built with Lit, ensuring high performance and ease of use.
 
@@ -33,9 +33,7 @@ Then, use the component in your HTML:
 <deeper-details
   expandButtonLabel="Show more"
   closeButtonLabel="Show less">
-  <button slot="toggler-button">Show more</button>
   <div>Content to be toggled</div>
-  <button slot="close-button">Show less</button>
 </deeper-details>
 ```
 
@@ -45,8 +43,20 @@ Then, use the component in your HTML:
 * `closeButtonLabel`: The label for the close button. Default is "Show less".
 
 ### Slots
-toggler-button: Slot for the button that toggles the content visibility.
-close-button: Slot for the button that hides the content.
+If you need more flexibility to style the buttons, you can replace them with your own, using slots!
+* *toggler-button*: Slot for the button that toggles the content visibility.
+* *close-button*: Slot for the button that hides the content.
+
+Example:
+html```
+<deeper-details
+  expandButtonLabel="Show more"
+  closeButtonLabel="Show less">
+  <button class="your-button-class" slot="toggler-button">Show more</button>
+  <div>Content to be toggled</div>
+  <button class="your-button-class" slot="close-button">Show less</button>
+</deeper-details>
+```
 
 ### Development
 To start developing with deeper-details, clone the repository and install the dependencies:
