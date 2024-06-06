@@ -94,18 +94,22 @@ export class DeeperDetails extends LitElement {
     return html`
       <div class="deeper-details-root">
         <slot name="toggler-button" id="launcherSlot">
-          <button class="button" @click=${this._handleToggleClick}>
-            ${this.expandButtonLabel}
-          </button>
+          <div class="toggler-wrapper">
+            <button class="button" @click=${this.handleToggleClick}>
+              ${this.expandButtonLabel}
+            </button>
+          </div>
         </slot>
         <div class="content-wrapper" aria-hidden="${!this._showContent}" id="contentWrapper" tabindex="-1">
           <div class="animation-wrapper">
             <slot></slot>
           </div>
           <slot name="close-button">
-            <button @click=${this._handleToggleClick} class="button">
-              ${this.closeButtonLabel}
-            </button>
+            <div class="close-button-wrapper">
+              <button @click=${this.handleToggleClick} class="button">
+                ${this.closeButtonLabel}
+              </button>
+            </div>
           </slot>
         </div>
       </div>
