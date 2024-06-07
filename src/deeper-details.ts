@@ -65,17 +65,13 @@ export class DeeperDetails extends LitElement {
 
   static get styles() {
     return css`
-      .deeper-details-root {
-        border-top: var(--deeperDetails-borderStyle, 1px solid rgba(128,128,128,0.5));
-        border-bottom: var(--deeperDetails-borderStyle, 1px solid rgba(128,128,128,0.5));
-        padding: var(--deeperDetails-verticalPadding, 0.5em) var(--deeperDetails-horizontalPadding, 0);
-      }
       .button {
         background-color: var(--deeperDetails-button-bgColor, none);
         border: var(--deeperDetails-button-borderStyle, none);
         color: var(--deeperDetails-button-textColor, inherit);
         cursor: pointer;
         font-size: var(--deeperDetails-button-fontSize, 1em);
+        font-weight: var(--deeperDetails-button-fontWeight, 400);
         padding: var(--deeperDetails-button-padding, 0.5em 0);
       }
       .content-wrapper {

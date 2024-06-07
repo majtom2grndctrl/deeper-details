@@ -30,6 +30,16 @@ body {
   min-height: 100vh;
 }
 
+/* Example of how to bring some of your own styling */
+deeper-details {
+  border-top: var(--deeperDetails-borderStyle, 1px solid rgba(128,128,128,0.5));
+  border-bottom: var(--deeperDetails-borderStyle, 1px solid rgba(128,128,128,0.5));
+  display: block;
+  padding: var(--deeperDetails-verticalPadding, 0.5em) var(--deeperDetails-horizontalPadding, 0);
+  --deeperDetails-button-textColor: hsl(216, 58%, 46%);
+  --deeperDetails-button-fontWeight: 600;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
