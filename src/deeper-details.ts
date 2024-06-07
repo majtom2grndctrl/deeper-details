@@ -22,7 +22,7 @@ export class DeeperDetails extends LitElement {
   @state()
   _showContent = false
 
-  private _handleToggleClick() {
+  public handleToggleClick() {
     const { contentWrapper } = this
     const nextShowContentState = !this._showContent
     if (!!nextShowContentState) {
@@ -43,6 +43,25 @@ export class DeeperDetails extends LitElement {
       }, 450)
     }
   }
+
+  private _findButtonWithAction = (nodes: Node[], action: string): HTMLButtonElement | undefined => {
+    for (const node of nodes) {
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        const element = node as HTMLElement;
+        console.log('nodeType is Node.Element')
+        if (element.tagName === 'BUTTON' && element.dataset.action === action) {
+          console.log('tagName is button')
+          return element as HTMLButtonElement;
+        } else {
+          const nestedButton = this._findButtonWithAction(Array.from(element.children), action);
+          if (nestedButton) {
+            return nestedButton;
+          }
+        }
+      }
+    }
+    return undefined;
+  };
 
   static get styles() {
     return css`
@@ -83,11 +102,17 @@ export class DeeperDetails extends LitElement {
   }
 
   firstUpdated() {
-    const togglerButtonOverride = this.togglerButtonSlot?.assignedNodes()[0]
-    togglerButtonOverride?.addEventListener('click', () => this._handleToggleClick())
+    const slottedTogglerButton = this._findButtonWithAction(
+      Array.from(this.togglerButtonSlot?.assignedNodes() || []),
+      'toggle'
+    )
+    slottedTogglerButton?.addEventListener('click', () => this.handleToggleClick())
 
-    const closeButtonOverride = this.closeButtonSlot?.assignedNodes()[0]
-    closeButtonOverride?.addEventListener('click', () => this._handleToggleClick())
+    const slottedCloseButton = this._findButtonWithAction(
+      Array.from(this.closeButtonSlot?.assignedNodes() || []),
+      'close'
+    )
+    slottedCloseButton?.addEventListener('click', () => this.handleToggleClick())
   }
 
   render() {
