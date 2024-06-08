@@ -38,6 +38,7 @@ deeper-details {
   padding: var(--deeperDetails-verticalPadding, 0.5em) var(--deeperDetails-horizontalPadding, 0);
   --deeperDetails-button-textColor: hsl(216, 58%, 46%);
   --deeperDetails-button-fontWeight: 600;
+  --deeperDetails-maxHeight-transition: 400ms ease-in-out;
 }
 
 @media (prefers-color-scheme: light) {

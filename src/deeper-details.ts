@@ -24,23 +24,24 @@ export class DeeperDetails extends LitElement {
 
   public handleToggleClick() {
     const { contentWrapper } = this
+
     const nextShowContentState = !this._showContent
     if (!!nextShowContentState) {
       this._showContent = nextShowContentState
       contentWrapper?.classList.add('open-animation')
-      window.setTimeout(() => {
+      contentWrapper?.addEventListener('transitionend', () => {
         contentWrapper?.classList.remove('open-animation')
-      }, 450)
+      }, { once: true })
     } else {
       contentWrapper?.classList.add('init-close-animation')
       window.setTimeout(() => {
         contentWrapper?.classList.remove('init-close-animation')
         contentWrapper?.classList.add('close-animation')
       }, 1)
-      window.setTimeout(() => {
+      contentWrapper?.addEventListener('transitionend', () => {
         contentWrapper?.classList.remove('close-animation')
         this._showContent = nextShowContentState
-      }, 450)
+      }, { once: true })
     }
   }
 
@@ -77,7 +78,7 @@ export class DeeperDetails extends LitElement {
       .content-wrapper {
         max-height: none;
         overflow: hidden;
-        transition: var(--deeperDetails-content-transition, max-height 400ms ease-in-out);
+        transition: max-height var(--deeperDetails-maxHeight-transition, 400ms ease-in-out);
       }
       .content-wrapper.open-animation {
         max-height: 100lvh;
@@ -86,7 +87,7 @@ export class DeeperDetails extends LitElement {
         max-height: 0;
       }
       .content-wrapper.init-close-animation {
-        max-height: 400lvh;
+        max-height: 100lvh;
       }
       .content-wrapper.close-animation {
         max-height: 0;
