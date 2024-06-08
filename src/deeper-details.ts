@@ -77,20 +77,27 @@ export class DeeperDetails extends LitElement {
       }
       .content-wrapper {
         max-height: none;
+        opacity: 1;
         overflow: hidden;
-        transition: max-height var(--deeperDetails-maxHeight-transition, 400ms ease-in-out);
+        transition: 
+          max-height var(--deeperDetails-maxHeight-transition, 400ms ease-in-out),
+          opacity var(--deeperDetails-opacity-transition, 400ms ease-in-out),
+          transform var(--deeperDetails-transform-transition, 400ms ease-in-out);
       }
       .content-wrapper.open-animation {
         max-height: 100lvh;
       }
       .content-wrapper[aria-hidden=true] {
         max-height: 0;
+        opacity: var(--deeperDetails-opacity--closed, 0);
+        transform: var(--deeperDetails-transform--closed, translate(2rem, 0));
       }
       .content-wrapper.init-close-animation {
         max-height: 100lvh;
       }
       .content-wrapper.close-animation {
         max-height: 0;
+        opacity: var(--deeperDetails-opacity--closed, 0);
       }
       .content-wrapper[aria-hidden=true] > .animation-wrapper {
         display: hidden;
