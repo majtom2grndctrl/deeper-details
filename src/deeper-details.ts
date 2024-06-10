@@ -49,9 +49,7 @@ export class DeeperDetails extends LitElement {
     for (const node of nodes) {
       if (node.nodeType === Node.ELEMENT_NODE) {
         const element = node as HTMLElement;
-        console.log('nodeType is Node.Element')
         if (element.tagName === 'BUTTON' && element.dataset.action === action) {
-          console.log('tagName is button')
           return element as HTMLButtonElement;
         } else {
           const nestedButton = this._findButtonWithAction(Array.from(element.children), action);
