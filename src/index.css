@@ -28,6 +28,14 @@ body {
   min-width: 320px;
   min-height: 100vh;
 }
+button {
+  background-color: #fff;
+  border: none;
+  border-bottom: 2rem solid rebeccapurple;
+  font-size: 1rem;
+  font-weight: 700;
+  display: inline-block;
+}
 
 /* Example of how to bring some of your own styling */
 deeper-details {
