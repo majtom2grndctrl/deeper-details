@@ -10,6 +10,9 @@ export class DeeperDetails extends LitElement {
   @property({ type: String })
   expandButtonLabel? = 'Show more'
 
+  @property({ type: Boolean })
+  showHideButton? = false
+
   @query('.content-wrapper')
   contentWrapper: HTMLDivElement | undefined
 
@@ -132,9 +135,13 @@ export class DeeperDetails extends LitElement {
           </div>
           <slot name="close-button">
             <div class="close-button-wrapper">
-              <button @click=${this.handleToggleClick} class="button">
-                ${this.closeButtonLabel}
-              </button>
+              ${ this.showHideButton
+                  ? html`
+                    <button @click=${this.handleToggleClick} class="button">
+                      ${this.hideButtonLabel}
+                    </button>
+                  ` : nothing
+              }
             </div>
           </slot>
         </div>
