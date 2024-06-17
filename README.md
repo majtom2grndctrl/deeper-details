@@ -5,6 +5,12 @@ Functionality and properties are likely to change after preliminary internal tes
 
 `deeper-details` is a web component built using the Lit library. It provides an expandable/collapsible section of content, allowing users to toggle visibility with custom buttons. Unlike other progressive disclosure components, this is designed for long-form content—like UX Portfolio case studies, where some readers can only skim content, and other readers want to see deeper details.
 
+The element’s architectural goals are to be:
+* Declarative
+* Brand-agnostic
+* Framework-agnostic
+* Visually customizable
+
 ## Features
 * Expand and collapse content with a toggle button.
 * Customizable button labels and styles, using CSS Custom Properies.
