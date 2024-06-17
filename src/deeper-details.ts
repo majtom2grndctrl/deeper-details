@@ -77,7 +77,6 @@ export class DeeperDetails extends LitElement {
         max-height: none;
         opacity: 1;
         overflow: hidden;
-        transition: 
           max-height var(--deeperDetails-maxHeight-transition, 400ms ease-in-out),
           opacity var(--deeperDetails-opacity-transition, 400ms ease-in-out),
           transform var(--deeperDetails-transform-transition, 400ms ease-in-out);
