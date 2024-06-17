@@ -39,13 +39,15 @@ button {
 
 /* Example of how to bring some of your own styling */
 deeper-details {
-  border-top: var(--deeperDetails-borderStyle, 1px solid rgba(128,128,128,0.5));
-  border-bottom: var(--deeperDetails-borderStyle, 1px solid rgba(128,128,128,0.5));
   display: block;
   padding: var(--deeperDetails-verticalPadding, 0.5em) var(--deeperDetails-horizontalPadding, 0);
-  --deeperDetails-button-textColor: hsl(216, 58%, 46%);
-  --deeperDetails-button-fontWeight: 600;
-  --deeperDetails-maxHeight-transition: 400ms ease-in-out;
+}
+.overview-details {
+  --deeperDetails-transition: max-height 400ms ease-in-out, opacity 400ms ease-in-out, transform 400ms linear;
+  /* --deeperDetails-transform--closed: perspective(100dvh) translate3d(0, 0, -10dvh); */
+}
+.overview-details > [slot=toggler-button] {
+  text-align: center;
 }
 
 @media (prefers-color-scheme: light) {
