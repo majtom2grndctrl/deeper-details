@@ -7,23 +7,19 @@
     <title>Vite + Lit + TS</title>
     <link rel="stylesheet" href="./src/index.css" />
     <script type="module" src="/src/deeper-details.ts"></script>
-    <style>
-      button {
-        background-color: silver;
-      }
-    </style>
   </head>
   <body>
     <div>
-      <h1>Example page</h1>
-      <p>Preceeding content</p>
-      <p>Preceeding content</p>
-      <p>Preceeding content</p>
-      <p>Preceeding content</p>
-      <p>Preceeding content</p>
-      <deeper-details>
-        <!-- Comment on the next line shows how to use a toggle button with your own styling -->
-        <div slot="toggler-button"><button data-action="toggle">OVERIDE!</button></div>
+      <h1><pre>Deeper-Details</pre></h1>
+      <p>UX Designers have at least two different user personas browsing through their portfolios, with dramatically different constraints on time and attention.</p>
+      <deeper-details class="overview-details" showButtonLabel="Tell me more…" hideButtonLabel="Show me less…">
+        <!-- Uncomment the below button to bring your own button -->
+        <!--
+        <button 
+          slot="toggle-button"
+          class="slotted-toggle-button"
+        >Go on…</button>
+        -->
         <h2>This is an H2 heading!</h2>
         <p>This is a paragraph!</p>
         <p>This is a paragraph!</p>
@@ -41,7 +37,7 @@
         <p>This is a paragraph!</p>
         <p>This is a paragraph!</p>
         <!-- Comment on the next line shows how to use a close button with your own styling -->
-        <div slot="close-button"><button data-action="close">OVERIDE!</button></div>
+        <!-- <button data-action="close" slot="close-button">Show less</button> -->
       </deeper-details>
       <p>Content after</p>
       <p>Content after</p>
