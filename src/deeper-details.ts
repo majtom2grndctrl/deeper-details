@@ -1,14 +1,14 @@
-import { LitElement, css, html } from 'lit'
-import { customElement, property, query, state } from 'lit/decorators.js'
+import { LitElement, css, html, nothing } from 'lit'
+import { customElement, property, query, queryAssignedElements, state } from 'lit/decorators.js'
 
 @customElement('deeper-details')
 export class DeeperDetails extends LitElement {
 
   @property({type: String })
-  closeButtonLabel? = 'Show less'
+  hideButtonLabel? = 'Show less'
 
   @property({ type: String })
-  expandButtonLabel? = 'Show more'
+  showButtonLabel? = 'Show more'
 
   @property({ type: Boolean })
   showHideButton? = false
@@ -16,54 +16,81 @@ export class DeeperDetails extends LitElement {
   @query('.content-wrapper')
   contentWrapper: HTMLDivElement | undefined
 
-  @query('slot[name=toggler-button]')
-  togglerButtonSlot: HTMLSlotElement | undefined
+  @queryAssignedElements({ slot: 'toggle-button' })
+  toggleButtonSlot!: Array<HTMLElement>
 
   @query('slot[name=close-button]')
-  closeButtonSlot: HTMLSlotElement | undefined
+  hideButtonSlot: HTMLSlotElement | undefined
 
   @state()
   _showContent = false
 
-  public handleToggleClick() {
+  private _toggleButtonIsSlotted = (): Boolean => this.toggleButtonSlot.length > 0
+
+  public handleToggleClick(event: MouseEvent) {
     const { contentWrapper } = this
+    const button = event.target as HTMLElement
+    const buttonLabelElement = this._findButtonLabel(button)
 
     const nextShowContentState = !this._showContent
-    if (!!nextShowContentState) {
+
+    if (nextShowContentState) {
+
       this._showContent = nextShowContentState
+
       contentWrapper?.classList.add('open-animation')
+
       contentWrapper?.addEventListener('transitionend', () => {
         contentWrapper?.classList.remove('open-animation')
       }, { once: true })
+
+      this.toggleButtonSlot[0].setAttribute('data-content-visibility-state', `${nextShowContentState}`)
+
+      if (this._toggleButtonIsSlotted() && !!this.hideButtonLabel) {
+        buttonLabelElement.innerText = this.hideButtonLabel
+      }
+
     } else {
+
       contentWrapper?.classList.add('init-close-animation')
+
       window.setTimeout(() => {
         contentWrapper?.classList.remove('init-close-animation')
         contentWrapper?.classList.add('close-animation')
       }, 1)
+
       contentWrapper?.addEventListener('transitionend', () => {
         contentWrapper?.classList.remove('close-animation')
         this._showContent = nextShowContentState
+        this.toggleButtonSlot[0].setAttribute('data-content-visibility-state', `${nextShowContentState}`)
       }, { once: true })
+
+      if (this._toggleButtonIsSlotted() && this.showButtonLabel) {
+        buttonLabelElement.innerText = this.showButtonLabel
+
+      }
+
     }
   }
 
-  private _findButtonWithAction = (nodes: Node[], action: string): HTMLButtonElement | undefined => {
-    for (const node of nodes) {
-      if (node.nodeType === Node.ELEMENT_NODE) {
-        const element = node as HTMLElement;
-        if (element.tagName === 'BUTTON' && element.dataset.action === action) {
-          return element as HTMLButtonElement;
-        } else {
-          const nestedButton = this._findButtonWithAction(Array.from(element.children), action);
-          if (nestedButton) {
-            return nestedButton;
-          }
-        }
-      }
+  protected firstUpdated() {
+    this.toggleButtonSlot[0].setAttribute('data-content-visibility-state', `${this._showContent}`)
+    if (this._toggleButtonIsSlotted() && !!this.showButtonLabel) {
+      const buttonLabel = this._findButtonLabel(this.toggleButtonSlot[0])
+      buttonLabel.innerText = this.showButtonLabel
     }
-    return undefined;
-  };
+  }
+
+  private _handleToggleSlotChange(event: Event) {
+    const toggleButton = event.target as HTMLSlotElement
+    toggleButton?.addEventListener('click', (clickEvent) => this.handleToggleClick(clickEvent))
+  }
+
+  private _findButtonLabel(element: HTMLElement) {
+    return element.childElementCount > 1
+    ? element.querySelector(".deeperDetails-button-label") as HTMLElement
+    : element as HTMLElement
+  }
 
   static get styles() {
     return css`
@@ -80,9 +107,7 @@ export class DeeperDetails extends LitElement {
         max-height: none;
         opacity: 1;
         overflow: hidden;
-          max-height var(--deeperDetails-maxHeight-transition, 400ms ease-in-out),
-          opacity var(--deeperDetails-opacity-transition, 400ms ease-in-out),
-          transform var(--deeperDetails-transform-transition, 400ms ease-in-out);
+        transition: var(--deeperDetails-transition, max-height 1ms ease-in-out);
       }
       .content-wrapper.open-animation {
         max-height: 100lvh;
@@ -90,7 +115,7 @@ export class DeeperDetails extends LitElement {
       .content-wrapper[aria-hidden=true] {
         max-height: 0;
         opacity: var(--deeperDetails-opacity--closed, 0);
-        transform: var(--deeperDetails-transform--closed, translate(2rem, 0));
+        transform: var(--deeperDetails-transform--closed);
       }
       .content-wrapper.init-close-animation {
         max-height: 100lvh;
@@ -98,6 +123,7 @@ export class DeeperDetails extends LitElement {
       .content-wrapper.close-animation {
         max-height: 0;
         opacity: var(--deeperDetails-opacity--closed, 0);
+        transform: var(--deeperDetails-transform--closed);
       }
       .content-wrapper[aria-hidden=true] > .animation-wrapper {
         display: hidden;
@@ -105,30 +131,16 @@ export class DeeperDetails extends LitElement {
     `
   }
 
-  firstUpdated() {
-    const slottedTogglerButton = this._findButtonWithAction(
-      Array.from(this.togglerButtonSlot?.assignedNodes() || []),
-      'toggle'
-    )
-    slottedTogglerButton?.addEventListener('click', () => this.handleToggleClick())
-
-    const slottedCloseButton = this._findButtonWithAction(
-      Array.from(this.closeButtonSlot?.assignedNodes() || []),
-      'close'
-    )
-    slottedCloseButton?.addEventListener('click', () => this.handleToggleClick())
-  }
-
   render() {
     return html`
       <div class="deeper-details-root">
-        <slot name="toggler-button" id="launcherSlot">
-          <div class="toggler-wrapper">
+        <div class="toggle-wrapper">
+          <slot name="toggle-button" @slotchange=${this._handleToggleSlotChange}>
             <button class="button" @click=${this.handleToggleClick}>
-              ${this.expandButtonLabel}
+              ${this._showContent ? this.hideButtonLabel : this.showButtonLabel}
             </button>
-          </div>
-        </slot>
+          </slot>
+        </div>
         <div class="content-wrapper" aria-hidden="${!this._showContent}" id="contentWrapper" tabindex="-1">
           <div class="animation-wrapper">
             <slot></slot>
