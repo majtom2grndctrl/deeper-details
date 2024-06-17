@@ -5,10 +5,10 @@ import { customElement, property, query, queryAssignedElements, state } from 'li
 export class DeeperDetails extends LitElement {
 
   @property({type: String })
-  hideButtonLabel? = 'Show less'
+  hideButtonLabel = 'Show less'
 
   @property({ type: String })
-  showButtonLabel? = 'Show more'
+  showButtonLabel = 'Show more'
 
   @property({ type: Boolean })
   showHideButton? = false
@@ -30,7 +30,6 @@ export class DeeperDetails extends LitElement {
   public handleToggleClick(event: MouseEvent) {
     const { contentWrapper } = this
     const button = event.target as HTMLElement
-    const buttonLabelElement = this._findButtonLabel(button)
 
     const nextShowContentState = !this._showContent
 
@@ -47,7 +46,7 @@ export class DeeperDetails extends LitElement {
       this.toggleButtonSlot[0].setAttribute('data-content-visibility-state', `${nextShowContentState}`)
 
       if (this._toggleButtonIsSlotted() && !!this.hideButtonLabel) {
-        buttonLabelElement.innerText = this.hideButtonLabel
+        button.innerText = this.hideButtonLabel
       }
 
     } else {
@@ -63,33 +62,25 @@ export class DeeperDetails extends LitElement {
         contentWrapper?.classList.remove('close-animation')
         this._showContent = nextShowContentState
         this.toggleButtonSlot[0].setAttribute('data-content-visibility-state', `${nextShowContentState}`)
+        if (this._toggleButtonIsSlotted()) {
+          this.toggleButtonSlot[0].innerText = this.showButtonLabel
+        }
       }, { once: true })
 
-      if (this._toggleButtonIsSlotted() && this.showButtonLabel) {
-        buttonLabelElement.innerText = this.showButtonLabel
-
-      }
 
     }
   }
 
   protected firstUpdated() {
     this.toggleButtonSlot[0].setAttribute('data-content-visibility-state', `${this._showContent}`)
-    if (this._toggleButtonIsSlotted() && !!this.showButtonLabel) {
-      const buttonLabel = this._findButtonLabel(this.toggleButtonSlot[0])
-      buttonLabel.innerText = this.showButtonLabel
+    if (this._toggleButtonIsSlotted()) {
+      this.toggleButtonSlot[0].innerText = this.showButtonLabel
     }
   }
 
   private _handleToggleSlotChange(event: Event) {
     const toggleButton = event.target as HTMLSlotElement
     toggleButton?.addEventListener('click', (clickEvent) => this.handleToggleClick(clickEvent))
-  }
-
-  private _findButtonLabel(element: HTMLElement) {
-    return element.childElementCount > 1
-    ? element.querySelector(".deeperDetails-button-label") as HTMLElement
-    : element as HTMLElement
   }
 
   static get styles() {
