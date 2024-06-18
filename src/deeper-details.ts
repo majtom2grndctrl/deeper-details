@@ -1,5 +1,5 @@
 import { LitElement, css, html, nothing } from 'lit'
-import { customElement, property, query, queryAssignedElements, state } from 'lit/decorators.js'
+import { customElement, property, query, queryAssignedElements } from 'lit/decorators.js'
 
 @customElement('deeper-details')
 export class DeeperDetails extends LitElement {
@@ -22,8 +22,8 @@ export class DeeperDetails extends LitElement {
   @query('slot[name=close-button]')
   hideButtonSlot: HTMLSlotElement | undefined
 
-  @state()
-  _showContent = false
+  @property({ type: Boolean, reflect: true })
+  showContent = false
 
   private _toggleButtonIsSlotted = (): Boolean => this.toggleButtonSlot.length > 0
 
@@ -31,19 +31,17 @@ export class DeeperDetails extends LitElement {
     const { contentWrapper } = this
     const button = event.target as HTMLElement
 
-    const nextShowContentState = !this._showContent
+    const nextShowContentState = !this.showContent
 
     if (nextShowContentState) {
 
-      this._showContent = nextShowContentState
+      this.showContent = nextShowContentState
 
       contentWrapper?.classList.add('open-animation')
 
       contentWrapper?.addEventListener('transitionend', () => {
         contentWrapper?.classList.remove('open-animation')
       }, { once: true })
-
-      this.toggleButtonSlot[0].setAttribute('data-content-visibility-state', `${nextShowContentState}`)
 
       if (this._toggleButtonIsSlotted() && !!this.hideButtonLabel) {
         button.innerText = this.hideButtonLabel
@@ -60,8 +58,7 @@ export class DeeperDetails extends LitElement {
 
       contentWrapper?.addEventListener('transitionend', () => {
         contentWrapper?.classList.remove('close-animation')
-        this._showContent = nextShowContentState
-        this.toggleButtonSlot[0].setAttribute('data-content-visibility-state', `${nextShowContentState}`)
+        this.showContent = nextShowContentState
         if (this._toggleButtonIsSlotted()) {
           this.toggleButtonSlot[0].innerText = this.showButtonLabel
         }
@@ -72,7 +69,6 @@ export class DeeperDetails extends LitElement {
   }
 
   protected firstUpdated() {
-    this.toggleButtonSlot[0].setAttribute('data-content-visibility-state', `${this._showContent}`)
     if (this._toggleButtonIsSlotted()) {
       this.toggleButtonSlot[0].innerText = this.showButtonLabel
     }
@@ -128,11 +124,11 @@ export class DeeperDetails extends LitElement {
         <div class="toggle-wrapper">
           <slot name="toggle-button" @slotchange=${this._handleToggleSlotChange}>
             <button class="button" @click=${this.handleToggleClick}>
-              ${this._showContent ? this.hideButtonLabel : this.showButtonLabel}
+              ${this.showContent ? this.hideButtonLabel : this.showButtonLabel}
             </button>
           </slot>
         </div>
-        <div class="content-wrapper" aria-hidden="${!this._showContent}" id="contentWrapper" tabindex="-1">
+        <div class="content-wrapper" aria-hidden="${!this.showContent}" id="contentWrapper" tabindex="-1">
           <div class="animation-wrapper">
             <slot></slot>
           </div>
