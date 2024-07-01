@@ -19,7 +19,7 @@ export class DeeperDetails extends LitElement {
   @queryAssignedElements({ slot: 'toggle-button' })
   toggleButtonSlot!: Array<HTMLElement>
 
-  @query('slot[name=close-button]')
+  @query('slot[name=hide-button]')
   hideButtonSlot: HTMLSlotElement | undefined
 
   @property({ type: Boolean, reflect: true })
@@ -49,15 +49,15 @@ export class DeeperDetails extends LitElement {
 
     } else {
 
-      contentWrapper?.classList.add('init-close-animation')
+      contentWrapper?.classList.add('init-hide-animation')
 
       window.setTimeout(() => {
-        contentWrapper?.classList.remove('init-close-animation')
-        contentWrapper?.classList.add('close-animation')
+        contentWrapper?.classList.remove('init-hide-animation')
+        contentWrapper?.classList.add('hide-animation')
       }, 1)
 
       contentWrapper?.addEventListener('transitionend', () => {
-        contentWrapper?.classList.remove('close-animation')
+        contentWrapper?.classList.remove('hide-animation')
         this.showContent = nextShowContentState
         if (this._toggleButtonIsSlotted()) {
           this.toggleButtonSlot[0].innerText = this.showButtonLabel
@@ -104,10 +104,10 @@ export class DeeperDetails extends LitElement {
         opacity: var(--deeperDetails-opacity--hidden, 0);
         transform: var(--deeperDetails-transform--hidden);
       }
-      .content-wrapper.init-close-animation {
+      .content-wrapper.init-hide-animation {
         max-height: 100lvh;
       }
-      .content-wrapper.close-animation {
+      .content-wrapper.hide-animation {
         max-height: 0;
         opacity: var(--deeperDetails-opacity--hidden, 0);
         transform: var(--deeperDetails-transform--hidden);
@@ -122,9 +122,14 @@ export class DeeperDetails extends LitElement {
     return html`
       <div class="deeper-details-root">
         <div class="toggle-wrapper">
-          <slot name="toggle-button" @slotchange=${this._handleToggleSlotChange}>
+          <slot name="expand-button" @slotchange=${this._handleToggleSlotChange}>
             <button class="button" @click=${this.handleToggleClick}>
-              ${this.showContent ? this.hideButtonLabel : this.showButtonLabel}
+              ${this.showButtonLabel}
+            </button>
+          </slot>
+          <slot name="hide-button" @slotchange=${this._handleToggleSlotChange}>
+            <button class="button" @click=${this.handleToggleClick}>
+              ${this.hideButtonLabel}
             </button>
           </slot>
         </div>
@@ -132,8 +137,8 @@ export class DeeperDetails extends LitElement {
           <div class="animation-wrapper">
             <slot></slot>
           </div>
-          <slot name="close-button">
-            <div class="close-button-wrapper">
+          <slot name="hide-button">
+            <div class="hide-button-wrapper">
               ${ this.showHideButton
                   ? html`
                     <button @click=${this.handleToggleClick} class="button">
