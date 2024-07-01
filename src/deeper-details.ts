@@ -101,16 +101,16 @@ export class DeeperDetails extends LitElement {
       }
       .content-wrapper[aria-hidden=true] {
         max-height: 0;
-        opacity: var(--deeperDetails-opacity--closed, 0);
-        transform: var(--deeperDetails-transform--closed);
+        opacity: var(--deeperDetails-opacity--hidden, 0);
+        transform: var(--deeperDetails-transform--hidden);
       }
       .content-wrapper.init-close-animation {
         max-height: 100lvh;
       }
       .content-wrapper.close-animation {
         max-height: 0;
-        opacity: var(--deeperDetails-opacity--closed, 0);
-        transform: var(--deeperDetails-transform--closed);
+        opacity: var(--deeperDetails-opacity--hidden, 0);
+        transform: var(--deeperDetails-transform--hidden);
       }
       .content-wrapper[aria-hidden=true] > .animation-wrapper {
         display: hidden;

@@ -44,7 +44,7 @@ deeper-details {
 }
 .overview-details {
   --deeperDetails-transition: max-height 400ms ease-in-out, opacity 400ms ease-in-out, transform 400ms linear;
-  /* --deeperDetails-transform--closed: perspective(100dvh) translate3d(0, 0, -10dvh); */
+  /* --deeperDetails-transform--hidden: perspective(100dvh) translate3d(0, 0, -10dvh); */
 }
 .overview-details > [slot=toggler-button] {
   text-align: center;
