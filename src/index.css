@@ -29,12 +29,15 @@ body {
   min-height: 100vh;
 }
 button {
-  background-color: #fff;
+  background-color: #f6cff8;
   border: none;
-  border-bottom: 2rem solid rebeccapurple;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  display: inline-block;
   font-size: 1rem;
   font-weight: 700;
-  display: inline-block;
+  padding: 0.5rem;
+  width: 10rem;
 }
 
 /* Example of how to bring some of your own styling */
@@ -43,8 +46,9 @@ deeper-details {
   padding: var(--deeperDetails-verticalPadding, 0.5em) var(--deeperDetails-horizontalPadding, 0);
 }
 .overview-details {
-  --deeperDetails-transition: max-height 400ms ease-in-out, opacity 400ms ease-in-out, transform 400ms linear;
+  --deeperDetails-transition: max-height 900ms ease-in-out, opacity 900ms ease-in-out, transform 900ms linear;
   /* --deeperDetails-transform--hidden: perspective(100dvh) translate3d(0, 0, -10dvh); */
+  --deeperDetails-toggle-transition: transform 40ms ease-in-out, opacity 400ms linear;
 }
 .overview-details > [slot=toggler-button] {
   text-align: center;
