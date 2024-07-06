@@ -25,38 +25,19 @@ export class DeeperDetails extends LitElement {
   @query('slot[name=hide-button]')
   hideButtonSlot: HTMLSlotElement | undefined
 
-  @property({ type: Boolean, reflect: true })
+  @property({ type: Boolean })
   _showContent = false
 
   @state()
   protected _animationState: 'initial' | 'expanded' | 'hidden' = 'initial'
 
-  private _toggleButtonIsSlotted = (): Boolean => this.toggleButtonSlot.length > 0
-
-  public handleToggleClick() {
+  public async handleToggleClick() {
 
     const nextShowContentState = !this._showContent
+    this._showContent = nextShowContentState
 
-    if (nextShowContentState) {
-
-      this._showContent = nextShowContentState
-      this._animationState = 'expanded'
-
-    } else {
-      this._showContent = nextShowContentState
-      this._animationState = 'hidden'
-    }
-  }
-
-  protected firstUpdated() {
-    if (this._toggleButtonIsSlotted()) {
-      this.toggleButtonSlot[0].innerText = this.showButtonLabel
-    }
-  }
-
-  private _handleToggleSlotChange(event: Event) {
-    const toggleButton = event.target as HTMLSlotElement
-    toggleButton?.addEventListener('click', () => this.handleToggleClick())
+    await this.updateComplete
+    this._animationState = this._showContent ? 'expanded' : 'hidden'
   }
 
   static get styles() {
@@ -133,21 +114,21 @@ export class DeeperDetails extends LitElement {
       <div class="deeper-details-root" data-show-content=${this._showContent} data-animation-state=${this._animationState}>
         <div class="toggle">
           <div class="toggle-element toggle-expand" aria-hidden=${this._showContent}>
-            <slot name="expand-button" @slotchange=${this._handleToggleSlotChange}>
-              <button class="button" @click=${this.handleToggleClick}>
+            <slot name="expand-button" @click=${this.handleToggleClick} aria-expanded=${this._showContent} aria-controls="contentWrapper">
+              <button class="button">
                 ${this.showButtonLabel}
               </button>
             </slot>
           </div>
-          <div class="toggle-element toggle-hide" aria-hidden=${!this._showContent}>
-            <slot name="hide-button" @slotchange=${this._handleToggleSlotChange}>
-              <button class="button" @click=${this.handleToggleClick}>
+          <div class="toggle-element toggle-hide" aria-hidden=${!this._showContent} aria-expanded=${this._showContent} aria-controls="contentWrapper">
+            <slot name="hide-button"  @click=${this.handleToggleClick} aria-expanded=${this._showContent} aria-controls="contentWrapper">
+              <button class="button">
                 ${this.hideButtonLabel}
               </button>
             </slot>
           </div>
         </div>
-        <div class="content-wrapper" aria-hidden=${!this._showContent} tabindex="-1">
+        <div id="contentWrapper" class="content-wrapper" aria-hidden=${!this._showContent} tabindex="-1">
           <div class="animation-wrapper">
             <slot></slot>
           </div>
