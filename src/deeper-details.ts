@@ -128,7 +128,7 @@ export class DeeperDetails extends LitElement {
             </slot>
           </div>
         </div>
-        <div id="contentWrapper" class="content-wrapper" aria-hidden=${!this._showContent} tabindex="-1">
+        <div id="contentWrapper" class="content-wrapper" aria-hidden=${!this._showContent}>
           <div class="animation-wrapper">
             <slot></slot>
           </div>
