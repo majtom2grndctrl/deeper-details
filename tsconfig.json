@@ -2,6 +2,7 @@
   "compilerOptions": {
     "declaration": true,
     "declarationDir": "./dist",
+    "emitDeclarationOnly": true,
     "outDir": "./dist",
     "sourceMap": true,
     "target": "ES2020",
@@ -16,7 +17,6 @@
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
 
     /* Linting */
     "strict": true,

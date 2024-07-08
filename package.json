@@ -16,7 +16,8 @@
     "@types/node": "^20.14.2",
     "terser": "^5.31.0",
     "typescript": "^5.4.5",
-    "vite": "^5.2.12"
+    "vite": "^5.2.12",
+    "vite-plugin-dts": "^3.9.1"
   },
   "files": [
     "src",
