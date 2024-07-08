@@ -114,15 +114,15 @@ export class DeeperDetails extends LitElement {
       <div class="deeper-details-root" data-show-content=${this._showContent} data-animation-state=${this._animationState}>
         <div class="toggle">
           <div class="toggle-element toggle-expand" aria-hidden=${this._showContent}>
-            <slot name="expand-button" @click=${this.handleToggleClick} aria-expanded=${this._showContent} aria-controls="contentWrapper">
-              <button class="button">
+            <slot name="expand-button" @click=${this.handleToggleClick}>
+              <button class="button" aria-expanded=${this._showContent} aria-controls="contentWrapper">
                 ${this.showButtonLabel}
               </button>
             </slot>
           </div>
-          <div class="toggle-element toggle-hide" aria-hidden=${!this._showContent} aria-expanded=${this._showContent} aria-controls="contentWrapper">
-            <slot name="hide-button"  @click=${this.handleToggleClick} aria-expanded=${this._showContent} aria-controls="contentWrapper">
-              <button class="button">
+          <div class="toggle-element toggle-hide" aria-hidden=${!this._showContent}>
+            <slot name="hide-button" @click=${this.handleToggleClick}>
+              <button class="button" aria-expanded=${this._showContent} aria-controls="contentWrapper">
                 ${this.hideButtonLabel}
               </button>
             </slot>
