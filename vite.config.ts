@@ -8,7 +8,6 @@ export default defineConfig({
       name: 'DeeperDetails',
       fileName: 'deeper-details'
     },
-    minify: 'terser',
     rollupOptions: {
       output: {
         entryFileNames: 'deeper-details.js'

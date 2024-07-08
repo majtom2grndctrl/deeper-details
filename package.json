@@ -19,8 +19,11 @@
     "vite": "^5.2.12"
   },
   "files": [
-    "dist/**/*"
+    "src",
+    "dist",
+    "types"
   ],
   "main": "dist/deeper-details.js",
+  "types": "dist/deeper-details.d.ts",
   "packageManager": "yarn@4.2.2"
 }
