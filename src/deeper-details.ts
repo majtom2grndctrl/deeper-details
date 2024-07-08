@@ -13,18 +13,6 @@ export class DeeperDetails extends LitElement {
   @property({ type: Boolean })
   showHideButton? = false
 
-  @query('.deeper-details-root')
-  elementRoot: HTMLDivElement | undefined
-
-  @query('.content-wrapper')
-  contentWrapper: HTMLDivElement | undefined
-
-  @queryAssignedElements({ slot: 'toggle-button' })
-  toggleButtonSlot!: Array<HTMLElement>
-
-  @query('slot[name=hide-button]')
-  hideButtonSlot: HTMLSlotElement | undefined
-
   @property({ type: Boolean })
   _showContent = false
 
