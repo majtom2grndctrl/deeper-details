@@ -8,10 +8,5 @@ export default defineConfig({
       name: 'DeeperDetails',
       fileName: 'deeper-details'
     },
-    rollupOptions: {
-      output: {
-        entryFileNames: 'deeper-details.js'
-      }
-    }
   }
 });

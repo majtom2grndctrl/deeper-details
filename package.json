@@ -23,7 +23,14 @@
     "dist",
     "types"
   ],
-  "main": "dist/deeper-details.js",
+  "main": "dist/deeper-details.umd.cjs",
+  "module": "dist/deeper-details.es.js",
   "types": "dist/deeper-details.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/deeper-details.js",
+      "require": "./dist/deeper-details.umd.cjs"
+    }
+  },
   "packageManager": "yarn@4.2.2"
 }
