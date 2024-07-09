@@ -61,7 +61,7 @@ If you need more flexibility to style the buttons, you can replace them with you
 * *close-button*: Slot for the button that hides the content.
 
 Example:
-html```
+```html
 <deeper-details
   expandButtonLabel="Show more"
   closeButtonLabel="Show less">
