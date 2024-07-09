@@ -45,6 +45,9 @@ deeper-details {
   display: block;
   padding: var(--deeperDetails-verticalPadding, 0.5em) var(--deeperDetails-horizontalPadding, 0);
 }
+deeper-details:not(:defined) {
+  display: none;
+}
 .overview-details {
   --deeperDetails-transition: max-height 900ms ease-in-out, opacity 900ms ease-in-out, transform 900ms linear;
   /* --deeperDetails-transform--hidden: perspective(100dvh) translate3d(0, 0, -10dvh); */
