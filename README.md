@@ -6,7 +6,7 @@ Functionality and properties are likely to change after preliminary internal tes
 
 ## Overview
 
-`deeper-details` is a web component built using the Lit library. It provides an expandable/collapsible section of content, allowing users to toggle visibility with custom buttons. Unlike other progressive disclosure components, this is designed for long-form content—like UX Portfolio case studies, where some readers can only skim content, and other readers want to see deeper details.
+`deeper-details` is a web component built using the Lit library. It provides an expandable/collapsible section of content, allowing users to toggle visibility with custom buttons. It’s designed for long-form content—like UX Portfolio case studies, where some readers can only skim content, and other readers want to see more detailed information.
 
 The element’s architectural goals are to be:
 * Declarative
@@ -18,7 +18,7 @@ The element’s architectural goals are to be:
 * Expand and collapse content with a toggle button.
 * Customizable button labels and styles, using CSS Custom Properies.
 * Smooth transition animations.
-* Built with Lit, ensuring high performance and ease of use.
+* Support for accessibility, utilizing ARIA attributes
 
 ## Installation
 You can install deeper-details via npm or yarn.
@@ -57,8 +57,9 @@ Then, use the component in your HTML:
 
 ### Slots
 If you need more flexibility to style the buttons, you can replace them with your own, using slots!
-* *toggler-button*: Slot for the button that toggles the content visibility.
-* *close-button*: Slot for the button that hides the content.
+* Default slot: The content to be expanded/collapsed
+* *expand-button*: Custom element for the expand button
+* *hide-button*: Custom element for the hide button
 
 Example:
 ```html
@@ -70,6 +71,19 @@ Example:
   <button class="your-button-class" slot="close-button">Show less</button>
 </deeper-details>
 ```
+
+### CSS Custom Properties
+If you need to re-style some elements inside the ShadowDOM, here are some properties you can override:
+
+* *--deeperDetails-button-bgColor*: Background color of buttons. _Default: none_
+* *--deeperDetails-button-borderStyle*: Border style of buttons. _Default: none_
+* *--deeperDetails-button-textColor*: Text color of buttons. _Default: inherit_
+* *--deeperDetails-button-fontSize*: Font size of buttons. _Default: 1em_
+* *--deeperDetails-button-fontWeight*: Font weight of buttons. _Default: 400_
+* *--deeperDetails-button-padding*: Padding of buttons. _Default: 0.5em 0_
+* *--deeperDetails-toggle-transition*: Transition for toggle elements. _Default: opacity 200ms linear_
+* *--deeperDetails-opacity--hidden*: Opacity of hidden content. _Default: 0_
+* *--deeperDetails-contentWrapper-animation*: Custom animation for content wrapper
 
 ### Development
 To start developing with deeper-details, clone the repository and install the dependencies:
