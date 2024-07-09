@@ -68,11 +68,7 @@ export class DeeperDetails extends LitElement {
         overflow: hidden;
       }
       [data-animation-state=expanded] .content-wrapper {
-        animation: var(--deeperDetails-contentWrapper-animation, content-wrapper-expand-animation 400ms ease-in-out);
         max-height: none;
-      }
-      [data-animation-state=hidden] .content-wrapper {
-        animation: var(--deeperDetails-contentWrapper-animation, content-wrapper-hide-animation 400ms ease-in-out);
       }
       .toggle {
         display: inline-block;
@@ -80,7 +76,7 @@ export class DeeperDetails extends LitElement {
       }
       .toggle-element {
         display: inline-block;
-        transition: var(--deeperDetails-toggle-transition, transform 400ms ease-in-out opacity 400ms linear);
+        transition: var(--deeperDetails-toggle-transition, opacity 200ms linear);
         opacity: 1;
       }
       .toggle-element:not(:first-child) {
@@ -93,6 +89,14 @@ export class DeeperDetails extends LitElement {
         flex-basis: 0;
         pointer-events: none;
         opacity: 0;
+      }
+      @media (prefers-reduced-motion: no-preference) {
+        [data-animation-state=expanded] .content-wrapper {
+          animation: var(--deeperDetails-contentWrapper-animation, content-wrapper-expand-animation 400ms ease-in-out);
+        }
+        [data-animation-state=hidden] .content-wrapper {
+          animation: var(--deeperDetails-contentWrapper-animation, content-wrapper-hide-animation 400ms ease-in-out);
+        }
       }
     `
   }
