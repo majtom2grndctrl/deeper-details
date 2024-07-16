@@ -1,6 +1,6 @@
 {
   "name": "deeper-details",
-  "version": "0.0.13",
+  "version": "0.0.15",
   "author": "Dan Hiester",
   "license": "MIT",
   "type": "module",
@@ -29,7 +29,7 @@
   "types": "dist/deeper-details.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/deeper-details.js",
+      "import": "./dist/deeper-details.es.js",
       "require": "./dist/deeper-details.umd.cjs"
     }
   },
