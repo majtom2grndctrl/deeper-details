@@ -79,6 +79,7 @@ export class DeeperDetails extends LitElement {
       }
       [data-animation-state=expanded] .content-wrapper {
         max-height: none;
+        overflow: visible;
       }
       .toggle {
         display: inline-block;
