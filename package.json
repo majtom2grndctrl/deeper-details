@@ -1,6 +1,6 @@
 {
   "name": "deeper-details",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "author": "Dan Hiester",
   "license": "MIT",
   "type": "module",
@@ -33,5 +33,5 @@
       "require": "./dist/deeper-details.umd.cjs"
     }
   },
-  "packageManager": "yarn@4.2.2"
+  "packageManager": "yarn@4.4.0"
 }
