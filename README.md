@@ -16,7 +16,7 @@ The element’s architectural goals are to be:
 
 ## Features
 * Expand and collapse content with a toggle button.
-* Customizable button labels and styles, using CSS Custom Properies.
+* Customizable button labels and styles, using CSS Custom Properties.
 * Smooth transition animations.
 * Support for accessibility, utilizing ARIA attributes
 
