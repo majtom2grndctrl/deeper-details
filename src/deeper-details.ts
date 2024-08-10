@@ -4,15 +4,6 @@ import { customElement, property, state } from 'lit/decorators.js'
 @customElement('deeper-details')
 export class DeeperDetails extends LitElement {
 
-  @property({type: String })
-  hideButtonLabel = 'Show less'
-
-  @property({ type: String })
-  showButtonLabel = 'Show more'
-
-  @property({ type: Boolean })
-  showHideButton? = false
-
   @property({ type: Boolean })
   _showContent = false
 
@@ -26,6 +17,35 @@ export class DeeperDetails extends LitElement {
 
     await this.updateComplete
     this._animationState = this._showContent ? 'expanded' : 'hidden'
+  }
+
+  private _handleToggleButtonSlotChange(e: Event) {
+    const slot = e.target as HTMLSlotElement
+    const buttons = slot.assignedElements().filter(el => el.tagName === 'BUTTON')
+
+    buttons.forEach(button => {
+      button.classList.add('button')
+      button.setAttribute('aria-expanded', this._showContent.toString())
+      button.setAttribute('aria-controls', 'contentWrapper')
+    })
+  }
+
+  updated(changedProperties: Map<string, any>) {
+    super.updated(changedProperties)
+
+    const updateButton = (slotName: 'expand-button' | 'hide-button') => {
+        const slot = this.shadowRoot!.querySelector(`slot[name="${slotName}"]`) as HTMLSlotElement
+        const buttons = slot.assignedElements().filter(el => el.tagName === 'BUTTON')
+        
+        buttons.forEach(button => {
+          button.setAttribute('aria-expanded', this._showContent.toString())
+        })
+    }
+  
+    if (changedProperties.has('_showContent')) {
+      updateButton('expand-button')
+      updateButton('hide-button')
+    }
   }
 
   static get styles() {
@@ -52,16 +72,6 @@ export class DeeperDetails extends LitElement {
           max-height: 0;
           opacity: var(--deeperDetails-opacity--hidden, 0);
         }
-      }
-      .button {
-        background-color: var(--deeperDetails-button-bgColor, none);
-        border: var(--deeperDetails-button-borderStyle, none);
-        color: var(--deeperDetails-button-textColor, inherit);
-        cursor: pointer;
-        font-size: var(--deeperDetails-button-fontSize, 1em);
-        font-weight: var(--deeperDetails-button-fontWeight, 400);
-        padding: var(--deeperDetails-button-padding, 0.5em 0);
-        white-space: nowrap;
       }
       .content-wrapper {
         max-height: 0;
@@ -106,18 +116,10 @@ export class DeeperDetails extends LitElement {
       <div class="deeper-details-root" data-show-content=${this._showContent} data-animation-state=${this._animationState}>
         <div class="toggle">
           <div class="toggle-element toggle-expand" aria-hidden=${this._showContent}>
-            <slot name="expand-button" @click=${this.handleToggleClick}>
-              <button class="button" aria-expanded=${this._showContent} aria-controls="contentWrapper">
-                ${this.showButtonLabel}
-              </button>
-            </slot>
+            <slot name="expand-button" @click=${this.handleToggleClick} @slotchange=${this._handleToggleButtonSlotChange}></slot>
           </div>
           <div class="toggle-element toggle-hide" aria-hidden=${!this._showContent}>
-            <slot name="hide-button" @click=${this.handleToggleClick}>
-              <button class="button" aria-expanded=${this._showContent} aria-controls="contentWrapper">
-                ${this.hideButtonLabel}
-              </button>
-            </slot>
+            <slot name="hide-button" @click=${this.handleToggleClick} @slotchange=${this._handleToggleButtonSlotChange}></slot>
           </div>
         </div>
         <div id="contentWrapper" class="content-wrapper" aria-hidden=${!this._showContent}>

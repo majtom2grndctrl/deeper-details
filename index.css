@@ -50,7 +50,6 @@ deeper-details:not(:defined) {
 }
 .overview-details {
   --deeperDetails-transition: max-height 900ms ease-in-out, opacity 900ms ease-in-out, transform 900ms linear;
-  /* --deeperDetails-transform--hidden: perspective(100dvh) translate3d(0, 0, -10dvh); */
   --deeperDetails-toggle-transition: transform 40ms ease-in-out, opacity 400ms linear;
 }
 .overview-details > [slot=toggler-button] {
