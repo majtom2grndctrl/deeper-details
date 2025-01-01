@@ -4,7 +4,25 @@
 
 A round of internal testing and external feedback has resulted in significant changes. With a clearer direction, new changes are likely to be smaller, and less likely to be breaking changes. But still, use this at your own risk until it’s marked as stable.
 
-## Overview
+## Why this exists
+
+Product Designers often receive mixed messages on how much detail to place in portfolio case studies. Interviews with UX mentors and hiring managers revealed there are reasons for the mixed feedback: There are different user personas for different kinds of people who review UX portfolios.
+
+### User personas for UX case studies
+
+It’s impossible to design one case study that adequately works well for the different personas reviewing portfolios, because they have different levels of time and cognitive load for reading. There are at least two different user personas.
+
+The **rushed reviewer** is often a recruiter, or a hiring manager, who reviews the first round of candidates for an opening. They need to read through dozens, potentially hundreds of portfolios, so they need a very light overview of a project.
+
+The **interested buyer** is usually a separate hiring manager, brought into the interviewing process after the rushed reviewer has filtered the list of candidates down to a manageable number. By this stage, candidates have often already passed a phone screen. The interested buyer has more time to process case studies, and has more thoughtful questions they want answers to while they read the case study.
+
+Sometimes, a person who starts as a **rushed reviewer** can shift over to an **interested buyer**—for example, if they want to do a more in-depth review of case studies before or after a portfolio presentation.
+
+### Solving for the needs of different personas
+
+`deeper-details` helps designers solve this problem by enabling them to place more intricately detailed content inside of a wrapper that’s hidden by default, but a call to action button with a label like “More information.” This enables the **interested buyer** to opt-in to seeing details, while the **rushed reviewer** can skip past the button and finish their quick initial review.
+
+## Technical overview
 
 `deeper-details` is a web component built using the Lit library. It provides an expandable/collapsible section of content, allowing users to toggle visibility with custom buttons. It’s designed for long-form content—like UX Portfolio case studies, where some readers can only skim content, and other readers want to see more detailed information.
 
